@@ -47,9 +47,22 @@
     padding:8px 16px; border-radius:12px; font-size:26px; font-weight:700; letter-spacing:.2px;
   }
   .version-tag{
-    font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1px;
-    margin-top:8px; opacity:.75;
+    display:inline-flex; align-items:center; gap:8px; margin-top:10px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:1px; color:#fff;
+    padding:6px 12px; border-radius:20px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+    box-shadow:0 0 0 rgba(0,0,0,0), 0 2px 10px rgba(0,0,0,.25);
+    animation:pillGlow 2.4s ease-in-out infinite;
   }
+  @keyframes pillGlow{
+    0%,100%{ box-shadow:0 0 6px 0 var(--accent), 0 2px 10px rgba(0,0,0,.25); }
+    50%{ box-shadow:0 0 16px 4px var(--accent), 0 2px 10px rgba(0,0,0,.25); }
+  }
+  .version-tag .vt-dot{width:7px;height:7px;border-radius:50%; flex-shrink:0;}
+  .version-tag .vt-dot.online{background:#5be07a; box-shadow:0 0 6px #5be07a;}
+  .version-tag .vt-dot.offline{background:#e0654f; box-shadow:0 0 6px #e0654f;}
+  .version-tag .vt-sep{opacity:.5;}
+  .version-tag .vt-clock{font-weight:700;}
   h1{font-size:30px; font-weight:700; letter-spacing:.2px;}
   .sub{color:var(--muted); font-size:13.5px; margin-top:5px; font-family:var(--mono);}
 
@@ -243,7 +256,14 @@
       <div>
         <div class="brand-badge">PBT CODELABS</div>
         <div><h1 class="dash-title">Project Dashboard</h1></div>
-        <div class="version-tag" id="versionTag">DB23AUG0903AM</div>
+        <div class="version-tag" id="versionTag">
+          <span class="vt-dot online" id="vtDot"></span>
+          <span id="vtStatus">Online</span>
+          <span class="vt-sep">•</span>
+          <span class="vt-clock" id="vtClock">--:--</span>
+          <span class="vt-sep">•</span>
+          <span>DB23AUG0230PM</span>
+        </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
       <div style="position:relative;">
@@ -416,7 +436,7 @@ function generateThemePalette(accentHex){
   };
 }
 
-let settings = { theme:'teal', brightness:15, cols:2 };
+let settings = { theme:'teal', brightness:82, cols:2 };
 
 async function loadSettings(){
   try{
@@ -851,6 +871,38 @@ async function saveNewProject(){
   await loadProjects();
   renderGrid();
 })();
+
+// ---------- ⏰ لائیو گھڑی — ہر سیکنڈ اپڈیٹ ہو ----------
+function updateClock(){
+  const el = document.getElementById('vtClock');
+  if(!el) return;
+  const now = new Date();
+  let h = now.getHours();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12; if(h === 0) h = 12;
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ss = String(now.getSeconds()).padStart(2,'0');
+  el.textContent = `${h}:${mm}:${ss} ${ampm}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ---------- 🟢🔴 انٹرنیٹ آن لائن/آف لائن حالت دکھائیں ----------
+function updateOnlineStatus(){
+  const dot = document.getElementById('vtDot');
+  const label = document.getElementById('vtStatus');
+  if(!dot || !label) return;
+  if(navigator.onLine){
+    dot.className = 'vt-dot online';
+    label.textContent = 'Online';
+  } else {
+    dot.className = 'vt-dot offline';
+    label.textContent = 'Offline';
+  }
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
 
 // ---------- آف لائن سپورٹ — انٹرنیٹ نہ ہو تب بھی ڈیش بورڈ کھلتا رہے ----------
 if('serviceWorker' in navigator){
