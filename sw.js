@@ -1,11 +1,11 @@
-const CACHE_NAME = 'DB23AUG0858AM';
+const CACHE_NAME = 'DB23AUG0903AM';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-512-maskable.png'
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-512-maskable.png'
 ];
 
 self.addEventListener('install', (event) => {
