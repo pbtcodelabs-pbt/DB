@@ -75,28 +75,24 @@
 
   .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px;}
   .proj-card{
-    background:linear-gradient(160deg,var(--panel2),var(--panel));
-    border:1px solid var(--line); border-radius:var(--radius);
-    padding:20px 14px; cursor:pointer; transition:.15s; position:relative; overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center;
+    background:transparent; border:none; padding:0;
+    cursor:pointer; transition:.15s; position:relative;
+    display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
   }
-  .proj-card:active{transform:scale(.97);}
-  .proj-card::before{
-    content:''; position:absolute; inset:0; opacity:.5;
-    background:radial-gradient(160px 90px at 50% -20%, var(--accent, #2fb8a6) 0%, transparent 70%);
-    pointer-events:none;
-  }
+  .proj-card:active{transform:scale(.96);}
   .proj-icon{
-    width:54px; height:54px; border-radius:14px; display:flex; align-items:center; justify-content:center;
-    font-size:24px; background:var(--accent-bg, var(--accent-dim)); border:1px solid var(--line); z-index:1;
+    width:100%; aspect-ratio:1/1; border-radius:24%; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(26px, 15vw, 52px); background:var(--accent-bg, var(--accent-dim));
+    box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;
+    overflow:hidden;
   }
-  .proj-name{font-weight:700; font-size:16px; z-index:1; letter-spacing:.2px;}
-  .proj-tag{font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase; z-index:1;}
+  .proj-name{font-weight:700; font-size:14px; letter-spacing:.2px;}
+  .proj-tag{font-family:var(--mono); font-size:9.5px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase;}
 
   .add-card{
-    border:1.5px dashed var(--line); border-radius:var(--radius);
+    border:1.5px dashed var(--line); border-radius:24%; aspect-ratio:1/1; width:100%;
     display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;
-    color:var(--muted); cursor:pointer; padding:18px; min-height:128px;
+    color:var(--muted); cursor:pointer; padding:12px;
   }
   .add-card:active{transform:scale(.97);}
   .add-card .plus{font-size:26px; color:var(--accent);}
@@ -161,13 +157,12 @@
   .grid.cols-4{grid-template-columns:repeat(4,1fr);}
   .grid.cols-5{grid-template-columns:repeat(5,1fr);}
   .grid.cols-6{grid-template-columns:repeat(6,1fr);}
-  .grid.cols-4 .proj-card, .grid.cols-5 .proj-card, .grid.cols-6 .proj-card{padding:12px 6px; gap:6px;}
-  .grid.cols-4 .proj-icon, .grid.cols-5 .proj-icon, .grid.cols-6 .proj-icon{width:38px;height:38px;font-size:17px;border-radius:10px;}
+  .grid.cols-4 .proj-card, .grid.cols-5 .proj-card, .grid.cols-6 .proj-card{gap:5px;}
   .grid.cols-4 .proj-name{font-size:11.5px;}
   .grid.cols-5 .proj-name{font-size:10px;}
   .grid.cols-6 .proj-name{font-size:9px;}
   .grid.cols-4 .proj-tag, .grid.cols-5 .proj-tag, .grid.cols-6 .proj-tag{font-size:8px;}
-  .grid.cols-5 .add-card, .grid.cols-6 .add-card{min-height:88px; padding:10px;}
+  .grid.cols-5 .add-card, .grid.cols-6 .add-card{padding:6px;}
   .grid.cols-5 .add-card .plus, .grid.cols-6 .add-card .plus{font-size:18px;}
   .grid.cols-5 .add-card .lbl, .grid.cols-6 .add-card .lbl{font-size:8.5px;}
   .close-btn{background:var(--panel); border:1px solid var(--line); color:var(--muted); width:34px; height:34px; border-radius:50%; font-size:16px; cursor:pointer;}
@@ -203,6 +198,10 @@
     border-radius:8px; padding:10px 12px; font-family:var(--mono); font-size:13px; outline:none;
   }
   input[type=text]:focus{border-color:var(--accent);}
+  input[type=file]{
+    width:100%; background:var(--panel); border:1px solid var(--line); color:var(--muted);
+    border-radius:8px; padding:9px 10px; font-family:var(--sans); font-size:12.5px;
+  }
 
   .btn{
     width:100%; padding:12px; border:none; border-radius:10px; background:linear-gradient(160deg,var(--accent),var(--accent-deep));
@@ -262,7 +261,7 @@
           <span class="vt-sep">•</span>
           <span class="vt-clock" id="vtClock">--:--</span>
           <span class="vt-sep">•</span>
-          <span>DB23AUG0230PM</span>
+          <span>DB258TU0510PM</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -355,12 +354,97 @@ const DEFAULT_PROJECTS = [
       { label: 'messagingSenderId', value: '641553421260' },
       { label: 'appId', value: '1:641553421260:web:3649a16e4a7bc33d564369' }
     ]
+  },
+  {
+    id: 'hafiz-musab',
+    name: 'Hafiz Musab App',
+    tag: 'Hifz / Tilawat',
+    icon: '📖',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/hafiz-musab-app/icon-192.png',
+    color: 4,
+    createdAt: 2,
+    links: [
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1oDN-6XUrZgXQIdknwB_vqZQS5K7baeWm', addedAt: 1 },
+      { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/hafiz-musab-app/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/hafiz-musab-app', addedAt: 1 },
+      { label: 'Privacy Policy', icon: '📄', url: 'https://pbtcodelabs-pbt.github.io/hafiz-musab-app/privacy-policy.html', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
+  },
+  {
+    id: 'urdu-fonts-studio',
+    name: 'Urdu Fonts Studio',
+    tag: 'Design Tool',
+    icon: '🖋️',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/urdu-fonts-studio/icon-192.png',
+    color: 2,
+    createdAt: 3,
+    links: [
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/12QnXBCpHZDwd4oSVsf4Raw_a6aGyfLkP', addedAt: 1 },
+      { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/urdu-fonts-studio/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/urdu-fonts-studio', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
+  },
+  {
+    id: 'piara-khata',
+    name: 'Piara Khata',
+    tag: 'Local App',
+    icon: '📒',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/Piara-khata/icon-192.png',
+    color: 1,
+    createdAt: 4,
+    links: [
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1_vkYwirLrNop3zZdxiZx2S4g48xbTQVr', addedAt: 1 },
+      { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/Piara-khata/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/Piara-khata', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
   }
 ];
 
 let projects = [];
 let activeId = null;
 let pickIcon = ICONS[0], pickColor = 0;
+let pickedIconDataUrl = null;
+
+// ---------- گیلری سے منتخب کی گئی تصویر کو چھوٹا کر کے (200x200) محفوظ کرنے کے قابل بنائیں ----------
+function resizeImageFile(file, maxSize){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if(w > h){ if(w > maxSize){ h = Math.round(h * maxSize / w); w = maxSize; } }
+        else { if(h > maxSize){ w = Math.round(w * maxSize / h); h = maxSize; } }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function onIconFileSelected(){
+  const input = document.getElementById('npIconFile');
+  if(!input.files || !input.files[0]) return;
+  try{
+    pickedIconDataUrl = await resizeImageFile(input.files[0], 200);
+    document.getElementById('npIconPreview').src = pickedIconDataUrl;
+    document.getElementById('npIconPreviewWrap').style.display = 'block';
+  }catch(e){
+    alert('Could not read that image, please try another one.');
+  }
+}
 let sortMode = 'name-az';
 
 // ============================================================
@@ -578,6 +662,13 @@ function migrateLinkTimestamps(){
       changed = true;
     }
   });
+  // ---------- نئے تین پراجیکٹس — اگر پہلے سے موجود نہیں تو خودکار شامل کر دیں (پرانی محفوظ فائل والوں کے لیے) ----------
+  ['hafiz-musab','urdu-fonts-studio','piara-khata'].forEach(newId => {
+    if(!projects.find(p => p.id === newId)){
+      const def = DEFAULT_PROJECTS.find(p => p.id === newId);
+      if(def){ projects.push(JSON.parse(JSON.stringify(def))); changed = true; }
+    }
+  });
   if(changed) saveProjects();
 }
 async function saveProjects(){
@@ -633,17 +724,6 @@ function openSheet(id){
   const c = COLORS[p.color] || COLORS[0];
   const sheet = document.getElementById('sheet');
 
-  const credsHtml = (p.creds || []).map((cr, i) => `
-    <div class="kv-box">
-      <div class="kv-label">${cr.label}</div>
-      <div class="kv-value">
-        <span class="mask" id="credval-${id}-${i}" data-full="${escapeHtml(cr.value)}">${maskValue(cr.value)}</span>
-        <button class="eye-mini" onclick="toggleMask('${id}',${i})">👁️</button>
-        <button class="copy-mini" onclick="copyCred('${id}',${i})">Copy</button>
-      </div>
-    </div>
-  `).join('') || `<div class="empty-hint">No config saved</div>`;
-
   sheet.innerHTML = `
     <div class="sheet-head">
       <div class="sheet-icon" style="background:${c.bg};">${p.iconImage ? `<img src="${p.iconImage}" alt="" onerror="this.parentElement.textContent='${p.icon}'">` : p.icon}</div>
@@ -679,7 +759,9 @@ function openSheet(id){
 
     <div class="sec">
       <div class="sec-title">Firebase / Config</div>
-      ${credsHtml}
+      <button class="add-link-btn" onclick="showAddCredForm('${id}')">+ Add Config</button>
+      <div id="addCredFormWrap-${id}"></div>
+      <div id="credsListWrap-${id}"></div>
     </div>
 
     <div class="sec">
@@ -692,6 +774,7 @@ function openSheet(id){
   `;
 
   renderLinksList(id);
+  renderCredsList(id);
 
   const ta = document.getElementById('notes-' + id);
   let saveTimer;
@@ -773,6 +856,64 @@ async function addLink(id){
   renderLinksList(id);
 }
 
+// ---------- Firebase / Config والا حصہ — key-value کی صورت میں کوئی بھی راز/سیٹنگ محفوظ کریں ----------
+function renderCredsList(id){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  const wrap = document.getElementById('credsListWrap-' + id);
+  if(!wrap) return;
+  const list = p.creds || [];
+  if(!list.length){
+    wrap.innerHTML = `<div class="empty-hint">No config saved</div>`;
+    return;
+  }
+  wrap.innerHTML = list.map((cr, i) => `
+    <div class="kv-box">
+      <div class="kv-label">${escapeHtml(cr.label)}</div>
+      <div class="kv-value">
+        <span class="mask" id="credval-${id}-${i}" data-full="${escapeHtml(cr.value)}">${maskValue(cr.value)}</span>
+        <button class="eye-mini" onclick="toggleMask('${id}',${i})">👁️</button>
+        <button class="copy-mini" onclick="copyCred('${id}',${i})">Copy</button>
+        <button class="copy-mini" style="color:var(--danger);" onclick="removeCred('${id}',${i})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showAddCredForm(id){
+  const wrap = document.getElementById('addCredFormWrap-' + id);
+  if(wrap.innerHTML){ wrap.innerHTML=''; return; }
+  wrap.innerHTML = `
+    <div class="add-link-form">
+      <div class="field"><label>Label</label><input type="text" id="newCredLabel-${id}" placeholder="e.g. apiKey, Login Email"></div>
+      <div class="field"><label>Value</label><input type="text" id="newCredValue-${id}" placeholder="the actual value"></div>
+      <button class="btn" onclick="addCred('${id}')">Add</button>
+    </div>
+  `;
+}
+
+async function addCred(id){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  const label = document.getElementById('newCredLabel-' + id).value.trim();
+  const value = document.getElementById('newCredValue-' + id).value.trim();
+  if(!label || !value){ alert('Please fill both fields'); return; }
+  if(!p.creds) p.creds = [];
+  p.creds.push({ label, value });
+  await saveProjects();
+  document.getElementById('addCredFormWrap-' + id).innerHTML = '';
+  renderCredsList(id);
+}
+
+async function removeCred(id, i){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  if(!confirm('Remove this entry?')) return;
+  p.creds.splice(i, 1);
+  await saveProjects();
+  renderCredsList(id);
+}
+
 function closeSheet(){
   document.getElementById('overlay').classList.remove('show');
   activeId = null;
@@ -810,7 +951,7 @@ async function deleteProject(id){
 }
 
 function openAddProject(){
-  pickIcon = ICONS[0]; pickColor = 0;
+  pickIcon = ICONS[0]; pickColor = 0; pickedIconDataUrl = null;
   const sheet = document.getElementById('sheet');
   sheet.innerHTML = `
     <div class="sheet-head">
@@ -822,7 +963,13 @@ function openAddProject(){
     <div class="field"><label>Tag (optional)</label><input type="text" id="npTag" placeholder="e.g. Play Store"></div>
 
     <div class="field"><label>Pick an Icon</label><div class="icon-pick" id="iconPick"></div></div>
-    <div class="field"><label>Or use a real app icon (image URL, optional)</label><input type="text" id="npIconImage" placeholder="https://.../icon-192.png"></div>
+    <div class="field">
+      <label>Or upload an icon from your Gallery (optional)</label>
+      <input type="file" accept="image/*" id="npIconFile" onchange="onIconFileSelected()">
+      <div id="npIconPreviewWrap" style="margin-top:8px; display:none;">
+        <img id="npIconPreview" style="width:56px;height:56px;border-radius:14px;object-fit:cover;border:1px solid var(--line);">
+      </div>
+    </div>
     <div class="field"><label>Pick a Color</label><div class="color-pick" id="colorPick"></div></div>
 
     <div class="field"><label>Google Drive Folder Link (optional)</label><input type="text" id="npDrive" placeholder="https://drive.google.com/..."></div>
@@ -853,13 +1000,12 @@ async function saveNewProject(){
   const name = document.getElementById('npName').value.trim();
   if(!name){ alert('Please enter a project name'); return; }
   const tag = document.getElementById('npTag').value.trim() || '—';
-  const iconImage = document.getElementById('npIconImage').value.trim();
   const drive = document.getElementById('npDrive').value.trim();
   const github = document.getElementById('npGithub').value.trim();
   const links = [];
   if(drive) links.push({ label: 'Google Drive Folder', icon: '📁', url: drive, addedAt: Date.now() });
   if(github) links.push({ label: 'GitHub / Live Link', icon: '💻', url: github, addedAt: Date.now() });
-  const newP = { id: 'p' + Date.now(), name, tag, icon: pickIcon, iconImage: iconImage || null, color: pickColor, createdAt: Date.now(), links, creds: [], notes: '' };
+  const newP = { id: 'p' + Date.now(), name, tag, icon: pickIcon, iconImage: pickedIconDataUrl || null, color: pickColor, createdAt: Date.now(), links, creds: [], notes: '' };
   projects.push(newP);
   await saveProjects();
   closeSheet();
