@@ -239,6 +239,14 @@
     color:var(--muted); font-family:var(--sans); font-size:13px; cursor:pointer; margin-bottom:8px;
   }
   .add-link-form{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px;}
+  .mem-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:10px;
+  }
+  .mem-card img{width:100%; display:block; cursor:zoom-in; max-height:280px; object-fit:cover;}
+  .mem-meta{
+    display:flex; align-items:center; justify-content:space-between; padding:8px 12px;
+    font-family:var(--mono); font-size:10.5px; color:var(--muted);
+  }
 
   .install-hint{
     background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
@@ -261,7 +269,7 @@
           <span class="vt-sep">•</span>
           <span class="vt-clock" id="vtClock">--:--</span>
           <span class="vt-sep">•</span>
-          <span>DB258TU0510PM</span>
+          <span>DB258TU03</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -339,7 +347,7 @@ const DEFAULT_PROJECTS = [
     color: 1,
     createdAt: 0,
     links: [
-      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1oDN-6XUrZgXQIdknwB_vqZQS5K7baeWm' },
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1ZwJP7vA7qXSk3F3RFzurUvXlJpnFhX9m' },
       { label: 'GitHub Repo (Play Store)', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/Ffpos-playstore' },
       { label: 'GitHub Repo (Code Builder)', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/Ffpos.cidegen' },
       { label: 'Code Builder (Licenses)', icon: '🔑', url: 'https://pbtcodelabs-pbt.github.io/Ffpos.cidegen/' },
@@ -400,6 +408,38 @@ const DEFAULT_PROJECTS = [
       { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1_vkYwirLrNop3zZdxiZx2S4g48xbTQVr', addedAt: 1 },
       { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/Piara-khata/', addedAt: 1 },
       { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/Piara-khata', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
+  },
+  {
+    id: 'hifz-progress',
+    name: 'Hifz Progress',
+    tag: 'Madrasa Software',
+    icon: '🕌',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/Hifz-progress/logo.png',
+    color: 4,
+    createdAt: 5,
+    links: [
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1qY01cWPb3gZrkL0zQUmLsfyAyUoHaoPL', addedAt: 1 },
+      { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/Hifz-progress/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/Hifz-progress', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
+  },
+  {
+    id: 'pbt-dashboard',
+    name: 'PBT Dashboard',
+    tag: 'Meta / This App',
+    icon: '🎨',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/DB/icons/icon-192.png',
+    color: 0,
+    createdAt: 6,
+    links: [
+      { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1y1VGWnCsRsOXpf76wnt8a42IFW4xBc2c', addedAt: 1 },
+      { label: 'Live Dashboard (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/DB/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/DB', addedAt: 1 }
     ],
     creds: [],
     notes: ''
@@ -505,8 +545,9 @@ function generateThemePalette(accentHex){
       panel:  hslToRgb(hue, 32, 15),
       panel2: hslToRgb(hue, 30, 19),
       line:   hslToRgb(hue, 26, 29),
-      text:   hslToRgb(hue, 18, 95),
-      muted:  hslToRgb(hue, 22, 64)
+      // ---------- لکھائی کبھی بھی رنگین نہ ہو — ہمیشہ خالص سفید/سیاہ، صاف اور واضح ----------
+      text:   [240, 244, 252],
+      muted:  [158, 168, 194]
     },
     light: {
       bg:     hslToRgb(hue, 35, 96),
@@ -514,8 +555,8 @@ function generateThemePalette(accentHex){
       panel:  hslToRgb(hue, 20, 99),
       panel2: hslToRgb(hue, 24, 93),
       line:   hslToRgb(hue, 28, 84),
-      text:   hslToRgb(hue, 35, 13),
-      muted:  hslToRgb(hue, 18, 42)
+      text:   [18, 22, 30],
+      muted:  [92, 100, 118]
     }
   };
 }
@@ -661,9 +702,17 @@ function migrateLinkTimestamps(){
       p.iconImage = 'https://pbtcodelabs-pbt.github.io/Ffpos-playstore/icon-192.png';
       changed = true;
     }
+    // ---------- FFPOS کا Drive لنک غلطی سے Hafiz Musab کے لنک سے دہرا گیا تھا — درست کریں ----------
+    if(p.id === 'ffpos'){
+      const driveLink = (p.links || []).find(l => l.label === 'Google Drive Folder');
+      if(driveLink && driveLink.url.includes('1oDN-6XUrZgXQIdknwB_vqZQS5K7baeWm')){
+        driveLink.url = 'https://drive.google.com/drive/folders/1ZwJP7vA7qXSk3F3RFzurUvXlJpnFhX9m';
+        changed = true;
+      }
+    }
   });
   // ---------- نئے تین پراجیکٹس — اگر پہلے سے موجود نہیں تو خودکار شامل کر دیں (پرانی محفوظ فائل والوں کے لیے) ----------
-  ['hafiz-musab','urdu-fonts-studio','piara-khata'].forEach(newId => {
+  ['hafiz-musab','urdu-fonts-studio','piara-khata','hifz-progress','pbt-dashboard'].forEach(newId => {
     if(!projects.find(p => p.id === newId)){
       const def = DEFAULT_PROJECTS.find(p => p.id === newId);
       if(def){ projects.push(JSON.parse(JSON.stringify(def))); changed = true; }
@@ -765,9 +814,13 @@ function openSheet(id){
     </div>
 
     <div class="sec">
-      <div class="sec-title">Notes</div>
-      <textarea id="notes-${id}" placeholder="Jot down anything worth remembering...">${p.notes || ''}</textarea>
+      <div class="sec-title">📌 Where I Left Off — Memory</div>
+      <textarea id="notes-${id}" placeholder="e.g. Last worked on this at 5 PM — payment screen still needs testing...">${p.notes || ''}</textarea>
       <div class="save-note" id="notesSaved-${id}">Saved</div>
+      <button class="add-link-btn" style="margin-top:10px;" onclick="showAddMemoryForm('${id}')">🖼️ Attach a Screenshot</button>
+      <input type="file" accept="image/*" id="memFile-${id}" style="display:none;" onchange="onMemoryFileSelected('${id}')">
+      <div id="addMemoryFormWrap-${id}"></div>
+      <div id="memoryListWrap-${id}"></div>
     </div>
 
     <button class="btn btn-ghost" onclick="deleteProject('${id}')">🗑 Remove this project</button>
@@ -775,6 +828,7 @@ function openSheet(id){
 
   renderLinksList(id);
   renderCredsList(id);
+  renderMemoryList(id);
 
   const ta = document.getElementById('notes-' + id);
   let saveTimer;
@@ -912,6 +966,108 @@ async function removeCred(id, i){
   p.creds.splice(i, 1);
   await saveProjects();
   renderCredsList(id);
+}
+
+// ============================================================
+// 📌 "Where I Left Off" — screenshots + notes so you can resume exactly where you stopped
+// ============================================================
+function _fmtDateTime(ms){
+  const d = new Date(ms);
+  const day = String(d.getDate()).padStart(2,'0');
+  const mon = d.toLocaleString('en',{month:'short'});
+  let h = d.getHours(); const ampm = h>=12?'PM':'AM'; h = h%12 || 12;
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  return `${day} ${mon} · ${h}:${mm} ${ampm}`;
+}
+
+function showAddMemoryForm(id){
+  document.getElementById('memFile-' + id).click();
+}
+
+async function onMemoryFileSelected(id){
+  const input = document.getElementById('memFile-' + id);
+  if(!input.files || !input.files[0]) return;
+  try{
+    const dataUrl = await resizeImageFile(input.files[0], 900);
+    await saveMemoryEntry(id, dataUrl);
+  }catch(e){
+    alert('Could not read that image, please try another one.');
+  }
+  input.value = '';
+}
+
+// ---------- کلپ بورڈ سے سیدھا پیسٹ (Ctrl+V) کر کے بھی سکرین شاٹ محفوظ کی جا سکے ----------
+document.addEventListener('paste', async (e) => {
+  if(!activeId) return;
+  const items = e.clipboardData && e.clipboardData.items;
+  if(!items) return;
+  for(const item of items){
+    if(item.type.indexOf('image') === 0){
+      const file = item.getAsFile();
+      try{
+        const canvas = document.createElement('canvas');
+        const img = new Image();
+        const reader = new FileReader();
+        const dataUrl = await new Promise((resolve, reject) => {
+          reader.onload = ev => {
+            img.onload = () => {
+              let w = img.width, h = img.height, maxSize = 900;
+              if(w > h){ if(w > maxSize){ h = Math.round(h*maxSize/w); w = maxSize; } }
+              else { if(h > maxSize){ w = Math.round(w*maxSize/h); h = maxSize; } }
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL('image/png'));
+            };
+            img.onerror = reject;
+            img.src = ev.target.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        await saveMemoryEntry(activeId, dataUrl);
+      }catch(err){}
+      break;
+    }
+  }
+});
+
+async function saveMemoryEntry(id, dataUrl){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  if(!p.memories) p.memories = [];
+  p.memories.unshift({ image: dataUrl, addedAt: Date.now() });
+  await saveProjects();
+  renderMemoryList(id);
+}
+
+function renderMemoryList(id){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  const wrap = document.getElementById('memoryListWrap-' + id);
+  if(!wrap) return;
+  const list = p.memories || [];
+  if(!list.length){
+    wrap.innerHTML = '';
+    return;
+  }
+  wrap.innerHTML = list.map((m, i) => `
+    <div class="mem-card">
+      <img src="${m.image}" onclick="window.open('${m.image}','_blank')">
+      <div class="mem-meta">
+        <span>${_fmtDateTime(m.addedAt)}</span>
+        <button class="copy-mini" style="color:var(--danger);" onclick="removeMemory('${id}',${i})">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function removeMemory(id, i){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  if(!confirm('Remove this screenshot?')) return;
+  p.memories.splice(i, 1);
+  await saveProjects();
+  renderMemoryList(id);
 }
 
 function closeSheet(){

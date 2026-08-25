@@ -1,4 +1,4 @@
-const CACHE_NAME = 'DB258TU0510PM';
+const CACHE_NAME = 'DB258TU03';
 const CORE_ASSETS = [
   './',
   './index.html',
