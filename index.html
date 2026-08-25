@@ -113,7 +113,7 @@
   @keyframes slideup{from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;}}
   .sheet-head{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
   .sheet-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--accent-bg,var(--accent-dim));border:1px solid var(--line);flex-shrink:0;overflow:hidden;}
-  .proj-icon img, .sheet-icon img{width:100%; height:100%; object-fit:cover; border-radius:inherit;}
+  .proj-icon img, .sheet-icon img{width:82%; height:82%; object-fit:contain; border-radius:inherit;}
   .sheet-title{font-size:20px; font-weight:700; flex:1; letter-spacing:.2px;}
 
   /* ---------- Header / Settings ---------- */
@@ -170,12 +170,20 @@
   .sec{margin-bottom:18px;}
   .sec-title{font-family:var(--mono); font-size:10.5px; letter-spacing:1.8px; color:var(--accent); text-transform:uppercase; margin-bottom:9px;}
   .link-row{
-    display:flex; align-items:center; gap:10px; background:var(--panel); border:1px solid var(--line);
-    border-radius:10px; padding:12px 14px; margin-bottom:8px; text-decoration:none; color:var(--text);
+    display:flex; align-items:center; gap:6px; background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:4px 4px 4px 14px; margin-bottom:8px;
+  }
+  .link-row-main{
+    display:flex; align-items:center; gap:10px; flex:1; min-width:0;
+    text-decoration:none; color:var(--text); padding:8px 0;
   }
   .link-row .li{font-size:18px; flex-shrink:0;}
-  .link-row .lt{flex:1; font-size:14px; font-weight:600;}
+  .link-row .lt{flex:1; font-size:14px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   .link-row .arrow{color:var(--muted);font-size:13px;}
+  .link-share-btn{
+    background:var(--accent-dim); border:none; color:var(--accent); width:38px; height:38px;
+    border-radius:8px; font-size:15px; cursor:pointer; flex-shrink:0;
+  }
 
   .kv-box{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:8px;}
   .kv-label{font-family:var(--mono); font-size:10.5px; color:var(--muted); margin-bottom:4px; letter-spacing:.3px;}
@@ -269,7 +277,7 @@
           <span class="vt-sep">•</span>
           <span class="vt-clock" id="vtClock">--:--</span>
           <span class="vt-sep">•</span>
-          <span>DB258TU03</span>
+          <span>DB258TU05</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -876,13 +884,26 @@ function renderLinksList(id){
     return;
   }
 
-  wrap.innerHTML = list.map(l => `
-    <a class="link-row" href="${l.url}" target="_blank" rel="noopener">
-      <span class="li">${l.icon}</span>
-      <span class="lt">${l.label}</span>
-      <span class="arrow">↗</span>
-    </a>
+  wrap.innerHTML = list.map((l, idx) => `
+    <div class="link-row">
+      <a class="link-row-main" href="${l.url}" target="_blank" rel="noopener">
+        <span class="li">${l.icon}</span>
+        <span class="lt">${l.label}</span>
+        <span class="arrow">↗</span>
+      </a>
+      <button class="link-share-btn" onclick="shareLink(event, '${escapeHtml(l.label)}', '${l.url}')" title="Share">📤</button>
+    </div>
   `).join('');
+}
+
+function shareLink(e, label, url){
+  e.stopPropagation();
+  e.preventDefault();
+  if(navigator.share){
+    navigator.share({ title: label, url: url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => alert('Link copied: ' + label));
+  }
 }
 
 function showAddLinkForm(id){
