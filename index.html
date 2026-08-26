@@ -89,7 +89,7 @@
     box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;
     overflow:hidden;
   }
-  .proj-icon.has-img, .sheet-icon.has-img{background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;}
+  .proj-icon.has-img, .sheet-icon.has-img{background:#eef1f8; box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;}
   .proj-name{font-weight:700; font-size:14px; letter-spacing:.2px;}
   .proj-tag{font-family:var(--mono); font-size:9.5px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase;}
 
@@ -117,7 +117,7 @@
   @keyframes slideup{from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;}}
   .sheet-head{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
   .sheet-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--accent-bg,var(--accent-dim));border:1px solid var(--line);flex-shrink:0;overflow:hidden;}
-  .proj-icon img, .sheet-icon img{width:82%; height:82%; object-fit:contain; border-radius:inherit;}
+  .proj-icon img, .sheet-icon img{width:82%; height:82%; object-fit:contain; border-radius:18%; box-shadow:0 0 0 1px rgba(15,23,42,.10);}
   .sheet-title{font-size:20px; font-weight:700; flex:1; letter-spacing:.2px;}
 
   /* ---------- Header / Settings ---------- */
@@ -323,7 +323,7 @@
           <span class="vt-badge vt-clock-badge">
             <span class="vt-clock" id="vtClock">--:--</span>
           </span>
-          <span class="vt-badge vt-build">DB268WE02</span>
+          <span class="vt-badge vt-build">DB268WE03</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -465,7 +465,7 @@ const DEFAULT_PROJECTS = [
     name: 'Piara Khata',
     tag: 'Local App',
     icon: '📒',
-    iconImage: 'https://pbtcodelabs-pbt.github.io/Piara-khata/icon-192.png',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/Piara-khata/icon-512x512.png',
     color: 1,
     createdAt: 4,
     links: [
@@ -797,7 +797,12 @@ function migrateLinkTimestamps(){
       p.iconImage = 'https://pbtcodelabs-pbt.github.io/Ffpos-playstore/icon-192.png';
       changed = true;
     }
-    // ---------- FFPOS کا Drive لنک غلطی سے Hafiz Musab کے لنک سے دہرا گیا تھا — درست کریں ----------
+    // ---------- Piara Khata کا آئیکن غلط فائل نام (icon-192.png) کی طرف پوائنٹ کر رہا تھا —
+    // اصل ریپو میں فائل کا نام icon-512x512.png ہے، پرانا محفوظ ڈیٹا بھی درست کر دیں ----------
+    if(p.id === 'piara-khata' && p.iconImage === 'https://pbtcodelabs-pbt.github.io/Piara-khata/icon-192.png'){
+      p.iconImage = 'https://pbtcodelabs-pbt.github.io/Piara-khata/icon-512x512.png';
+      changed = true;
+    }
     if(p.id === 'ffpos'){
       const driveLink = (p.links || []).find(l => l.label === 'Google Drive Folder');
       if(driveLink && driveLink.url.includes('1oDN-6XUrZgXQIdknwB_vqZQS5K7baeWm')){
