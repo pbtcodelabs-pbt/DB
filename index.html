@@ -323,7 +323,7 @@
           <span class="vt-badge vt-clock-badge">
             <span class="vt-clock" id="vtClock">--:--</span>
           </span>
-          <span class="vt-badge vt-build">DB268WE03</span>
+          <span class="vt-badge vt-build">DB268WE04</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -506,6 +506,22 @@ const DEFAULT_PROJECTS = [
       { label: 'Google Drive Folder', icon: '📁', url: 'https://drive.google.com/drive/folders/1y1VGWnCsRsOXpf76wnt8a42IFW4xBc2c', addedAt: 1 },
       { label: 'Live Dashboard (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/DB/', addedAt: 1 },
       { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/DB', addedAt: 1 }
+    ],
+    creds: [],
+    notes: ''
+  },
+  {
+    id: 'aio-playstore',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/AIO/',
+    name: 'AIO POS',
+    tag: 'Play Store',
+    icon: '🧾',
+    iconImage: 'https://pbtcodelabs-pbt.github.io/AIO/icon-192.png',
+    color: 3,
+    createdAt: 7,
+    links: [
+      { label: 'Live App (GitHub Pages)', icon: '🌐', url: 'https://pbtcodelabs-pbt.github.io/AIO/', addedAt: 1 },
+      { label: 'GitHub Repo', icon: '💻', url: 'https://github.com/pbtcodelabs-pbt/AIO', addedAt: 1 }
     ],
     creds: [],
     notes: ''
@@ -812,7 +828,7 @@ function migrateLinkTimestamps(){
     }
   });
   // ---------- نئے تین پراجیکٹس — اگر پہلے سے موجود نہیں تو خودکار شامل کر دیں (پرانی محفوظ فائل والوں کے لیے) ----------
-  ['hafiz-musab','urdu-fonts-studio','piara-khata','hifz-progress','pbt-dashboard'].forEach(newId => {
+  ['hafiz-musab','urdu-fonts-studio','piara-khata','hifz-progress','pbt-dashboard','aio-playstore'].forEach(newId => {
     if(!projects.find(p => p.id === newId)){
       const def = DEFAULT_PROJECTS.find(p => p.id === newId);
       if(def){ projects.push(JSON.parse(JSON.stringify(def))); changed = true; }
