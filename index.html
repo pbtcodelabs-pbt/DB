@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="My Projects">
 <title>My Project Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;600;700&family=Work+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -47,13 +47,17 @@
     padding:8px 16px; border-radius:12px; font-size:26px; font-weight:700; letter-spacing:.2px;
   }
   .version-tag{
-    display:inline-flex; align-items:center; gap:8px; margin-top:10px;
-    font-family:var(--mono); font-size:10.5px; letter-spacing:1px; color:#fff;
-    padding:6px 12px; border-radius:20px;
-    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-    box-shadow:0 0 0 rgba(0,0,0,0), 0 2px 10px rgba(0,0,0,.25);
-    animation:pillGlow 2.4s ease-in-out infinite;
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px;
+    flex-wrap:wrap;
   }
+  .vt-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:1px; color:#fff;
+    padding:6px 13px; border-radius:20px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+    box-shadow:0 2px 10px rgba(0,0,0,.25);
+  }
+  .vt-badge.vt-clock-badge{animation:pillGlow 2.4s ease-in-out infinite;}
   @keyframes pillGlow{
     0%,100%{ box-shadow:0 0 6px 0 var(--accent), 0 2px 10px rgba(0,0,0,.25); }
     50%{ box-shadow:0 0 16px 4px var(--accent), 0 2px 10px rgba(0,0,0,.25); }
@@ -61,8 +65,7 @@
   .version-tag .vt-dot{width:7px;height:7px;border-radius:50%; flex-shrink:0;}
   .version-tag .vt-dot.online{background:#5be07a; box-shadow:0 0 6px #5be07a;}
   .version-tag .vt-dot.offline{background:#e0654f; box-shadow:0 0 6px #e0654f;}
-  .version-tag .vt-sep{opacity:.5;}
-  .version-tag .vt-clock{font-weight:700;}
+  .version-tag .vt-clock{font-weight:800; font-size:12.5px; letter-spacing:.6px;}
   h1{font-size:30px; font-weight:700; letter-spacing:.2px;}
   .sub{color:var(--muted); font-size:13.5px; margin-top:5px; font-family:var(--mono);}
 
@@ -86,6 +89,7 @@
     box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;
     overflow:hidden;
   }
+  .proj-icon.has-img, .sheet-icon.has-img{background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.3), 0 0 0 1px var(--line) inset;}
   .proj-name{font-weight:700; font-size:14px; letter-spacing:.2px;}
   .proj-tag{font-family:var(--mono); font-size:9.5px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase;}
 
@@ -119,8 +123,8 @@
   /* ---------- Header / Settings ---------- */
   .header-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
   .settings-btn{
-    background:var(--panel); border:1px solid var(--line); width:42px; height:42px; border-radius:12px;
-    font-size:18px; cursor:pointer; flex-shrink:0;
+    background:var(--panel); border:1px solid var(--line); width:54px; height:54px; border-radius:15px;
+    font-size:25px; cursor:pointer; flex-shrink:0; box-shadow:0 3px 10px rgba(0,0,0,.2);
   }
   .settings-popover{
     display:none; position:absolute; top:50px; right:0; width:250px; z-index:40;
@@ -142,6 +146,12 @@
   .settings-popover .theme-swatch-row{gap:7px;}
   .settings-popover .theme-swatch{width:32px;height:32px;}
   .theme-swatch.sel{border-color:#fff;}
+  .font-pick{display:flex; flex-wrap:wrap; gap:6px;}
+  .font-opt{
+    padding:7px 12px; border-radius:8px; background:var(--panel); border:1px solid var(--line);
+    color:var(--text); font-size:12.5px; cursor:pointer;
+  }
+  .font-opt.sel{border-color:var(--accent); background:var(--accent-dim); color:var(--accent);}
   .settings-row{margin-bottom:18px;}
   .settings-row-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
   .col-stepper{display:flex; align-items:center; gap:10px;}
@@ -193,10 +203,11 @@
   .eye-mini{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;flex-shrink:0;}
 
   textarea{
-    width:100%; min-height:90px; background:var(--panel); border:1px solid var(--line); color:var(--text);
+    width:100%; min-height:90px; background:#f5f7fc; border:1px solid #d9deee; color:#1a2033;
     border-radius:10px; padding:12px 14px; font-family:var(--sans); font-size:14px; resize:vertical; outline:none;
   }
-  textarea:focus{border-color:var(--accent);}
+  textarea::placeholder{color:#8891a8;}
+  textarea:focus{border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);}
   .save-note{font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:6px;}
 
   .field{margin-bottom:10px;}
@@ -247,13 +258,31 @@
     color:var(--muted); font-family:var(--sans); font-size:13px; cursor:pointer; margin-bottom:8px;
   }
   .add-link-form{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px;}
+  .memory-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
   .mem-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:10px;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; position:relative;
   }
-  .mem-card img{width:100%; display:block; cursor:zoom-in; max-height:280px; object-fit:cover;}
-  .mem-meta{
-    display:flex; align-items:center; justify-content:space-between; padding:8px 12px;
-    font-family:var(--mono); font-size:10.5px; color:var(--muted);
+  .mem-card img{width:100%; aspect-ratio:1/1; display:block; cursor:zoom-in; object-fit:cover;}
+  .mem-card .mem-date{
+    position:absolute; left:0; right:0; bottom:0; padding:3px 5px 4px;
+    background:linear-gradient(0deg, rgba(0,0,0,.7), transparent);
+    font-family:var(--mono); font-size:7.5px; color:#fff; line-height:1.2;
+  }
+  .mem-card .mem-remove{
+    position:absolute; top:4px; right:4px; width:20px; height:20px; border-radius:50%;
+    background:rgba(0,0,0,.55); color:#fff; border:none; font-size:11px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; line-height:1;
+  }
+  .img-lightbox{
+    position:fixed; inset:0; background:rgba(4,7,16,.94); z-index:80;
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .img-lightbox.show{display:flex;}
+  .img-lightbox img{max-width:100%; max-height:100%; border-radius:10px; box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .img-lightbox .lb-close{
+    position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:50%;
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:#fff;
+    font-size:16px; cursor:pointer;
   }
 
   .play-btn{
@@ -287,12 +316,14 @@
         <div class="brand-badge">PBT CODELABS</div>
         <div><h1 class="dash-title">Project Dashboard</h1></div>
         <div class="version-tag" id="versionTag">
-          <span class="vt-dot online" id="vtDot"></span>
-          <span id="vtStatus">Online</span>
-          <span class="vt-sep">•</span>
-          <span class="vt-clock" id="vtClock">--:--</span>
-          <span class="vt-sep">•</span>
-          <span>DB258TU06</span>
+          <span class="vt-badge vt-status">
+            <span class="vt-dot online" id="vtDot"></span>
+            <span id="vtStatus">Online</span>
+          </span>
+          <span class="vt-badge vt-clock-badge">
+            <span class="vt-clock" id="vtClock">--:--</span>
+          </span>
+          <span class="vt-badge vt-build">DB268WE02</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -318,6 +349,11 @@
 
 <div class="overlay" id="overlay" onclick="if(event.target===this) closeSheet()">
   <div class="sheet" id="sheet"></div>
+</div>
+
+<div class="img-lightbox" id="imgLightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" onclick="event.stopPropagation()">
 </div>
 
 <script>
@@ -527,6 +563,14 @@ const ACCENT_THEMES = {
   blue:  { name:'Blue',  hex:'#4f8ce0', dim:'#1c2a3a', deep:'#2c5fa8' },
   grey:  { name:'Grey',  hex:'#9aa4bf', dim:'#232838', deep:'#5a6480' }
 };
+const FONTS = {
+  roboto:  { name:'Roboto',   css:"'Roboto Condensed',Arial,sans-serif" },
+  inter:   { name:'Inter',    css:"'Inter',Arial,sans-serif" },
+  poppins: { name:'Poppins',  css:"'Poppins',Arial,sans-serif" },
+  nunito:  { name:'Nunito',   css:"'Nunito',Arial,sans-serif" },
+  rubik:   { name:'Rubik',    css:"'Rubik',Arial,sans-serif" },
+  work:    { name:'Work Sans',css:"'Work Sans',Arial,sans-serif" }
+};
 const DARK_PALETTE  = { bg:[11,18,32], bg2:[15,24,48], panel:[18,27,51], panel2:[22,33,63], line:[35,49,82], text:[234,240,255], muted:[139,155,196] };
 const LIGHT_PALETTE = { bg:[244,246,252], bg2:[255,255,255], panel:[255,255,255], panel2:[237,240,250], line:[214,220,238], text:[20,26,46], muted:[100,110,140] };
 
@@ -591,7 +635,7 @@ function generateThemePalette(accentHex){
   };
 }
 
-let settings = { theme:'teal', brightness:82, cols:2 };
+let settings = { theme:'teal', brightness:82, cols:2, font:'roboto' };
 
 async function loadSettings(){
   try{
@@ -611,7 +655,9 @@ function rgbStr(arr){ return `rgb(${arr[0]},${arr[1]},${arr[2]})`; }
 
 function applySettings(){
   const t = ACCENT_THEMES[settings.theme] || ACCENT_THEMES.teal;
+  const f = FONTS[settings.font] || FONTS.roboto;
   const root = document.documentElement.style;
+  root.setProperty('--sans', f.css);
   root.setProperty('--accent', t.hex);
   root.setProperty('--accent-dim', t.dim);
   root.setProperty('--accent-deep', t.deep);
@@ -664,6 +710,10 @@ function renderSettingsPopover(){
         <button onclick="onColsChange(1)">+</button>
       </div>
     </div>
+    <div class="pop-row">
+      <div class="pop-sec-title">Font Style</div>
+      <div class="font-pick" id="fontPick"></div>
+    </div>
   `;
 
   const row = document.getElementById('themeSwatchRow');
@@ -679,6 +729,21 @@ function renderSettingsPopover(){
       applySettings(); saveSettings();
     };
     row.appendChild(d);
+  });
+
+  const fontRow = document.getElementById('fontPick');
+  Object.entries(FONTS).forEach(([key, val]) => {
+    const d = document.createElement('div');
+    d.className = 'font-opt' + (settings.font === key ? ' sel' : '');
+    d.style.fontFamily = val.css;
+    d.textContent = val.name;
+    d.onclick = () => {
+      settings.font = key;
+      document.querySelectorAll('.font-opt').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel');
+      applySettings(); saveSettings();
+    };
+    fontRow.appendChild(d);
   });
 }
 
@@ -783,7 +848,7 @@ function renderGrid(){
     card.style.setProperty('--accent-bg', c.bg);
     card.onclick = () => openSheet(p.id);
     card.innerHTML = `
-      <div class="proj-icon">${p.iconImage ? `<img src="${p.iconImage}" alt="" onerror="this.parentElement.textContent='${p.icon}'">` : p.icon}</div>
+      <div class="proj-icon${p.iconImage ? ' has-img' : ''}">${p.iconImage ? `<img src="${p.iconImage}" alt="" onerror="this.parentElement.classList.remove('has-img'); this.parentElement.textContent='${p.icon}'">` : p.icon}</div>
       <div class="proj-name">${p.name}</div>
       <div class="proj-tag">${p.tag}</div>
     `;
@@ -805,7 +870,7 @@ function openSheet(id){
 
   sheet.innerHTML = `
     <div class="sheet-head">
-      <div class="sheet-icon" style="background:${c.bg};">${p.iconImage ? `<img src="${p.iconImage}" alt="" onerror="this.parentElement.textContent='${p.icon}'">` : p.icon}</div>
+      <div class="sheet-icon${p.iconImage ? ' has-img' : ''}" style="${p.iconImage ? '' : `background:${c.bg};`}">${p.iconImage ? `<img src="${p.iconImage}" alt="" onerror="this.parentElement.classList.remove('has-img'); this.parentElement.style.background='${c.bg}'; this.parentElement.textContent='${p.icon}'">` : p.icon}</div>
       <div class="sheet-title">${p.name}</div>
       <button class="close-btn" onclick="closeSheet()">✕</button>
     </div>
@@ -1098,15 +1163,24 @@ function renderMemoryList(id){
     wrap.innerHTML = '';
     return;
   }
-  wrap.innerHTML = list.map((m, i) => `
+  wrap.innerHTML = `<div class="memory-grid">` + list.map((m, i) => `
     <div class="mem-card">
-      <img src="${m.image}" onclick="window.open('${m.image}','_blank')">
-      <div class="mem-meta">
-        <span>${_fmtDateTime(m.addedAt)}</span>
-        <button class="copy-mini" style="color:var(--danger);" onclick="removeMemory('${id}',${i})">Remove</button>
-      </div>
+      <img src="${m.image}" onclick="openLightbox('${id}',${i})">
+      <div class="mem-date">${_fmtDateTime(m.addedAt)}</div>
+      <button class="mem-remove" onclick="removeMemory('${id}',${i})" title="Remove">✕</button>
     </div>
-  `).join('');
+  `).join('') + `</div>`;
+}
+
+function openLightbox(id, i){
+  const p = projects.find(x => x.id === id);
+  if(!p || !p.memories || !p.memories[i]) return;
+  document.getElementById('lightboxImg').src = p.memories[i].image;
+  document.getElementById('imgLightbox').classList.add('show');
+}
+function closeLightbox(){
+  document.getElementById('imgLightbox').classList.remove('show');
+  document.getElementById('lightboxImg').src = '';
 }
 
 async function removeMemory(id, i){
