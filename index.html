@@ -256,6 +256,21 @@
     font-family:var(--mono); font-size:10.5px; color:var(--muted);
   }
 
+  .play-btn{
+    width:100%; padding:13px; border:none; border-radius:12px; margin-bottom:14px;
+    background:linear-gradient(160deg,var(--accent),var(--accent-deep)); color:#fff;
+    font-family:var(--sans); font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+  }
+  .play-embed-box{
+    position:relative; width:100%; height:70vh; border-radius:14px; overflow:hidden;
+    border:1px solid var(--line); margin-bottom:16px; background:#000;
+  }
+  .play-embed-box iframe{width:100%; height:100%; border:none;}
+  .play-embed-fallback{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px; padding:20px; text-align:center; background:var(--panel); color:var(--muted); font-size:13px;
+  }
   .install-hint{
     background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px;
     font-size:12.5px; color:var(--muted); margin-bottom:18px; line-height:1.5;
@@ -277,7 +292,7 @@
           <span class="vt-sep">•</span>
           <span class="vt-clock" id="vtClock">--:--</span>
           <span class="vt-sep">•</span>
-          <span>DB258TU05</span>
+          <span>DB258TU06</span>
         </div>
         <div class="sub">Drive, GitHub, Code Builder — all in one place</div>
       </div>
@@ -321,6 +336,7 @@ const COLORS = [
 const DEFAULT_PROJECTS = [
   {
     id: 'aio-direct',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/AIO-POS-DIRECT/',
     name: 'AIO POS Direct',
     tag: 'Local / Sideload',
     icon: '🧾',
@@ -348,6 +364,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'ffpos',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/Ffpos-playstore/',
     name: 'FFPOS',
     tag: 'Play Store',
     icon: '🍔',
@@ -373,6 +390,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'hafiz-musab',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/hafiz-musab-app/',
     name: 'Hafiz Musab App',
     tag: 'Hifz / Tilawat',
     icon: '📖',
@@ -390,6 +408,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'urdu-fonts-studio',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/urdu-fonts-studio/',
     name: 'Urdu Fonts Studio',
     tag: 'Design Tool',
     icon: '🖋️',
@@ -406,6 +425,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'piara-khata',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/Piara-khata/',
     name: 'Piara Khata',
     tag: 'Local App',
     icon: '📒',
@@ -422,6 +442,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'hifz-progress',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/Hifz-progress/',
     name: 'Hifz Progress',
     tag: 'Madrasa Software',
     icon: '🕌',
@@ -438,6 +459,7 @@ const DEFAULT_PROJECTS = [
   },
   {
     id: 'pbt-dashboard',
+    liveUrl: 'https://pbtcodelabs-pbt.github.io/DB/',
     name: 'PBT Dashboard',
     tag: 'Meta / This App',
     icon: '🎨',
@@ -788,6 +810,11 @@ function openSheet(id){
       <button class="close-btn" onclick="closeSheet()">✕</button>
     </div>
 
+    ${(p.liveUrl || (p.links||[]).find(l => /live/i.test(l.label))) ? `
+    <button class="play-btn" id="playBtn-${id}" onclick="togglePlayEmbed('${id}')">▶️ Open Live App (right here)</button>
+    <div id="playEmbedWrap-${id}"></div>
+    ` : ''}
+
     <div class="sticky-filter-bar">
       <div class="filter-row-1">
         <span class="sort-label">Sort links</span>
@@ -1089,6 +1116,49 @@ async function removeMemory(id, i){
   p.memories.splice(i, 1);
   await saveProjects();
   renderMemoryList(id);
+}
+
+// ---------- ▶️ لائیو ایپ اسی ڈیش بورڈ کے اندر کھولیں (iframe) — کہیں اور جانے کی ضرورت نہیں ----------
+function togglePlayEmbed(id){
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  const liveUrl = p.liveUrl || (p.links||[]).find(l => /live/i.test(l.label))?.url;
+  if(!liveUrl) return;
+  const wrap = document.getElementById('playEmbedWrap-' + id);
+  const btn = document.getElementById('playBtn-' + id);
+  if(wrap.innerHTML){
+    wrap.innerHTML = '';
+    btn.textContent = '▶️ Open Live App (right here)';
+    return;
+  }
+  wrap.innerHTML = `
+    <div class="play-embed-box">
+      <iframe src="${liveUrl}" id="playFrame-${id}"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"></iframe>
+    </div>
+  `;
+  btn.textContent = '✕ Close Live App';
+  setTimeout(() => {
+    const frame = document.getElementById('playFrame-' + id);
+    if(!frame) return;
+    try{
+      if(!frame.contentWindow) showPlayFallback(id, liveUrl);
+    }catch(e){ /* cross-origin normal — ٹھیک ہے */ }
+  }, 2500);
+}
+
+function showPlayFallback(id, liveUrl){
+  const wrap = document.getElementById('playEmbedWrap-' + id);
+  if(!wrap) return;
+  wrap.innerHTML = `
+    <div class="play-embed-box">
+      <div class="play-embed-fallback">
+        <span style="font-size:32px;">⚠️</span>
+        <div>This app doesn't allow embedding — open it directly instead.</div>
+        <button class="btn" style="width:auto; padding:10px 20px;" onclick="window.open('${liveUrl}','_blank')">🌐 Open in New Tab</button>
+      </div>
+    </div>
+  `;
 }
 
 function closeSheet(){
